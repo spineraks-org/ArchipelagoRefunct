@@ -9,7 +9,7 @@ from BaseClasses import Item, ItemClassification, Location, MultiWorld, Region, 
 from worlds.AutoWorld import WebWorld, World
 
 from .Items import RefunctItem, item_table
-from .Locations import location_table, RefunctLocation, starting_platform, platforms_with_button_on_them, number_buttons_per_cluster, platforms_without_button_ids
+from .Locations import location_table, RefunctLocation, platform_ids
 from .Options import RefunctOptions, FinalPlatform
 
 
@@ -65,7 +65,7 @@ class RefunctWorld(World):
             self.multiworld.itempool.append(self.create_item("Grass"))
         for _ in range(self.amount_of_grass - self.required_grass):
             self.multiworld.itempool.append(self.create_item("Grass", force_useful=True))
-        for _ in range(174 - self.amount_of_grass):
+        for _ in range(211 - self.amount_of_grass):
             self.multiworld.itempool.append(self.create_item("Flower"))
             
         if "Vanilla Minigame" in self.options.minigames.value:
@@ -125,7 +125,7 @@ class RefunctWorld(World):
                 region_object = self.multiworld.get_region("Seeker Minigame", self.player)
                 region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
             
-        seeker_pressed_platforms = platforms_without_button_ids.copy()
+        seeker_pressed_platforms = platform_ids.copy()
         self.seeker_pressed_platforms = self.multiworld.random.sample(seeker_pressed_platforms, len(seeker_pressed_platforms) - 10)
         
         
@@ -175,14 +175,6 @@ class RefunctWorld(World):
         possible_final_platforms = [i for i,j in location_table.items() if j.type_of_check == "Platform"]
         
         location_names = [i.name for i in self.get_locations()]
-        for button, platform in platforms_with_button_on_them:  # put a :) on every button platform
-            loc_name = f"Platform {button}-{platform}"
-            if loc_name in location_names:
-                self.get_location(loc_name).address = None # never let people go to these platforms to avoid buttons
-                self.get_location(loc_name).place_locked_item(
-                    self.create_item(":)")
-                )
-                possible_final_platforms.remove(loc_name)
                     
         self.finish_platform = None
         if self.options.final_platform.value == FinalPlatform.option_1_5:
@@ -245,8 +237,7 @@ class RefunctWorld(World):
         slot_data["finish_platform_c"] = self.finish_platform[0]
         slot_data["finish_platform_p"] = self.finish_platform[1]
         
-        if "Seeker Minigame" in self.options.minigames.value:
-            slot_data["seeker_pressed_platforms"] = self.seeker_pressed_platforms
+        slot_data["seeker_pressed_platforms"] = self.seeker_pressed_platforms
         
         slot_data["ap_world_version"] = self.ap_world_version
         slot_data["final_platform_known"] = self.options.final_platform.value != FinalPlatform.option_random_unknown

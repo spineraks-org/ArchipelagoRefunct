@@ -9,7 +9,7 @@ class AmountOfGrass(Range):
     display_name = "Amount Of Grass"
     default = 100
     range_start = 10
-    range_end = 174
+    range_end = 200
     
 class RequiredGrassPercentage(Range):
     """This options sets the percentage of grass you need in order to win when you go to the final platform.

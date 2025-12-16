@@ -71,46 +71,6 @@ number_platforms_per_cluster = {
     31: 5,
 }
 
-platforms_with_button_on_them = [
-    (1,1),
-    (2,3),
-    (3,2),
-    (4,4),
-    (5,1),
-    (6,1),
-    (7,1),
-    (7,2),
-    (8,11),
-    (9,6),
-    (10,1),
-    (10,3),
-    (11,8),
-    (12,1),
-    (13,1),
-    (14,3),
-    (15,2),
-    (16,1),
-    (17,2),
-    (18,2),
-    (18,1),
-    (19,5),
-    (20,7),
-    (21,8),
-    (22,2),
-    (23,3),
-    (24,1),
-    (25,5),
-    (26,12),
-    (26,7),
-    (26,9),
-    (27,8),
-    (28,18),
-    (28,8),
-    (29,4),
-    (30,12),
-    (31,2),
-]
-
 starting_platform = (1,2)
     
 class LocData(typing.NamedTuple):
@@ -132,11 +92,7 @@ location_table = {
        for i in range(1, 11)},
 }
     
-platforms_with_button_ids = []
-platforms_without_button_ids = []
+platform_ids = []
 for cluster, num_platforms in number_platforms_per_cluster.items():
     for platform in range(1, num_platforms + 1):
-        if (cluster, platform) not in platforms_with_button_on_them:
-            platforms_without_button_ids.append(10010000 + cluster * 100 + platform)
-        else:
-            platforms_with_button_ids.append(10010000 + cluster * 100 + platform)
+        platform_ids.append(10010000 + cluster * 100 + platform)
