@@ -9,7 +9,7 @@ from BaseClasses import Item, ItemClassification, Location, MultiWorld, Region, 
 from worlds.AutoWorld import WebWorld, World
 
 from .Items import RefunctItem, item_table, item_groups
-from .Locations import location_table, RefunctLocation, starting_platform, platforms_with_button_on_them, platforms_without_button_ids, block_brawl_scores, block_blub_scores
+from .Locations import location_table, RefunctLocation, starting_platform, platforms_with_button_on_them, platforms_without_button_ids, platforms_with_button_ids, block_brawl_scores, block_blub_scores
 from .Options import RefunctOptions, FinalPlatform, Traps, Cubes, ExtraCubes, UnderwaterCubes, refunct_option_groups
 
 
@@ -71,7 +71,7 @@ class RefunctWorld(World):
             items_to_add.append("Grass")
         for _ in range(self.amount_of_grass - self.required_grass):
             items_to_add.append(["Grass", True])
-        for _ in range(173 - self.amount_of_grass):
+        for _ in range(208 - self.amount_of_grass):
             items_to_add.append("Flower")
             
         # cubes
@@ -245,6 +245,7 @@ class RefunctWorld(World):
 
         if hasattr(self.multiworld, "re_gen_passthrough"):
             self.minigames = self.multiworld.re_gen_passthrough[self.game]["minigames"]
+            self.seeker_platforms = self.multiworld.re_gen_passthrough[self.game]["seeker_platforms"]
         else:
             minigames_weights = self.options.minigames_likeliness.value
             population = list(minigames_weights.keys())
@@ -276,7 +277,8 @@ class RefunctWorld(World):
         self.multiworld.regions += regions
         
         for loc_name, loc_data in [(a, b) for a, b in location_table.items()]:
-            if loc_data.type_of_check == "Platform" or \
+            if loc_data.type_of_check == "Button" or \
+                loc_data.type_of_check == "Platform" or \
                 (self.options.cubes != Cubes.option_never and loc_data.type_of_check == "Cube") or \
                 (self.options.extra_cubes != ExtraCubes.option_never and loc_data.type_of_check == "Extra Cube"):
                 # (self.options.underwater_cubes != UnderwaterCubes.option_never and loc_data.type_of_check == "Underwater Cube"):
@@ -296,9 +298,16 @@ class RefunctWorld(World):
                 region_object = self.multiworld.get_region("Vanilla Minigame", self.player)
                 region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
                 
+        # Seeker Minigame info
+        all_platforms = platforms_without_button_ids.copy() + platforms_with_button_ids.copy()
+        self.seeker_platforms = self.multiworld.random.sample(all_platforms, 10)
+        
         if "Seeker Minigame" in self.minigames:
             self.multiworld.regions.append(Region("Seeker Minigame", self.player, self.multiworld))
-            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Seeker"]:
+            search_for = []
+            for id in self.seeker_platforms:
+                search_for.append(((id % 10000) // 100, id % 100))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Seeker" and (b.main_nr, b.sub_nr) in search_for]:
                 region_object = self.multiworld.get_region("Seeker Minigame", self.player)
                 region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
                 
@@ -335,10 +344,7 @@ class RefunctWorld(World):
                     region_object = self.multiworld.get_region(f"Block Blub Minigame {color}", self.player)
                     region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
         
-        
-        # Seeker Minigame info
-        seeker_pressed_platforms = platforms_without_button_ids.copy()
-        self.seeker_pressed_platforms = self.multiworld.random.sample(seeker_pressed_platforms, len(seeker_pressed_platforms) - 10)
+
         
         # OG Randomizer Minigame info
         self.set_og_randomizer_order()
@@ -461,7 +467,7 @@ class RefunctWorld(World):
         possible_final_platforms = [i for i,j in location_table.items() if j.type_of_check == "Platform"]
         
         location_names = [i.name for i in self.get_locations()]
-        for button, platform in platforms_with_button_on_them:  # put a :) on every button platform
+        for button, platform in platforms_with_button_on_them.keys():  # put a :) on every button platform
             loc_name = f"Platform {button}-{platform}"
             if loc_name in location_names:
                 self.get_location(loc_name).address = None # never let people go to these platforms to avoid buttons
@@ -577,7 +583,7 @@ class RefunctWorld(World):
         slot_data["extra_cubes"] = self.options.extra_cubes.value
         # slot_data["underwater_cubes"] = self.options.underwater_cubes.value
         
-        slot_data["seeker_pressed_platforms"] = self.seeker_pressed_platforms
+        slot_data["seeker_platforms"] = self.seeker_platforms
         slot_data["og_randomizer_order"] = self.og_randomizer_order
         
         slot_data["death_link"] = self.options.death_link.value
@@ -589,4 +595,4 @@ class RefunctWorld(World):
 
     @staticmethod
     def interpret_slot_data(slot_data: Dict[str, Any]) -> Dict[str, Any]:
-        return {"minigames": slot_data["minigames"]}
+        return {"minigames": slot_data["minigames"], "seeker_platforms": slot_data["seeker_platforms"]}

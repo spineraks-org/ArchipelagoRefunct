@@ -13,7 +13,7 @@ class RefunctItem(Item):
     button_nr: int
 
 
-item_table = {f"Cluster {i}": ItemData(10000000 + i, ItemClassification.progression) for i in range(1, 31)}
+item_table = {f"Cluster {i}": ItemData(10000000 + i, ItemClassification.progression) for i in range(1, 32)}
 item_table["Grass"] = ItemData(9999999, ItemClassification.progression_deprioritized_skip_balancing) 
 item_table["Starting Platform"] = ItemData(9999998, ItemClassification.filler) 
 item_table["Final Platform"] = ItemData(9999997, ItemClassification.progression)
@@ -89,5 +89,33 @@ item_groups = {
         "Red Cubes Bag",
         "Green Cubes Bag",
         "Blue Cubes Bag",
+    },
+    "Clusters": {
+        f"Cluster {i}" for i in range(1, 31) 
+    },
+    "Minigames": {
+        "Vanilla Minigame",
+        "Seeker Minigame",
+        "Button Galore Minigame",
+        "OG Randomizer Minigame",
+        "Block Brawl Minigame Reds",
+        "Block Brawl Minigame Blues",
+        "Block Brawl Minigame Greens",
+        "Block Brawl Minigame Yellows",
+        "Climb Line Minigame",
+        "Climb Spiral Minigame",
+        "Climb Chaos Minigame",
+        "Block Blub Minigame Reds",
+        "Block Blub Minigame Blues",
+        "Block Blub Minigame Greens",
+        "Block Blub Minigame Yellows",
+    },
+    "Abilities": {
+        "Ledge Grab",
+        "Progressive Wall Jump",
+        "Swim",
+        "Jump Pads",
+        "Pipes",
+        "Lifts",
     },
 }
