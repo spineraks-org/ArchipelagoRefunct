@@ -108,7 +108,7 @@ platforms_with_button_on_them = {
     (28,8): (28,1),
     (29,4): (29,1),
     (30,12): (30,1),
-   #  (31,2): (31,1),
+    (31,2): (31,1),
 }
 
 starting_platform = (1,2)
@@ -186,9 +186,9 @@ block_blub_scores = [3,15,21,30,42,60,84,120]
 
 location_table = {
     **{f"Button {i}-{j}": LocData(10000000 + i * 100 + j, i, j, "Button", None)
-       for i in range(1, 31) for j in range(1, number_buttons_per_cluster[i] + 1)},
+       for i in range(1, 32) for j in range(1, number_buttons_per_cluster[i] + 1)},
     **{f"Platform {i}-{j}": LocData(10010000 + i * 100 + j, i, j, "Platform", None)
-       for i in range(1, 31) for j in range(1, number_platforms_per_cluster[i] + 1)},
+       for i in range(1, 32) for j in range(1, number_platforms_per_cluster[i] + 1)},
     **{f"Vanilla Minigame: Button {i}-{j}": LocData(10020000 + i * 100 + j, i, j, "Minigame", "Vanilla")
        for i in range(1, 32) for j in range(1, number_buttons_per_cluster[i] + 1)},
     **{f"Seeker Minigame: Platform {i}-{j}": LocData(10030000 + i * 100 + j, i, j, "Minigame", "Seeker")

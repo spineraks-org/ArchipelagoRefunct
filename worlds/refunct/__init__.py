@@ -10,7 +10,7 @@ from worlds.AutoWorld import WebWorld, World
 
 from .Items import RefunctItem, item_table, item_groups
 from .Locations import location_table, RefunctLocation, starting_platform, platforms_with_button_on_them, platforms_without_button_ids, platforms_with_button_ids, block_brawl_scores, block_blub_scores
-from .Options import RefunctOptions, FinalPlatform, Traps, Cubes, ExtraCubes, UnderwaterCubes, refunct_option_groups
+from .Options import Goal, RefunctOptions, Traps, Cubes, ExtraCubes, UnderwaterCubes, refunct_option_groups
 
 
 class RefunctWeb(WebWorld):
@@ -71,7 +71,7 @@ class RefunctWorld(World):
             items_to_add.append("Grass")
         for _ in range(self.amount_of_grass - self.required_grass):
             items_to_add.append(["Grass", True])
-        for _ in range(208 - self.amount_of_grass):
+        for _ in range(250 - self.amount_of_grass):
             items_to_add.append("Flower")
             
         # cubes
@@ -465,35 +465,54 @@ class RefunctWorld(World):
 
                     
         possible_final_platforms = [i for i,j in location_table.items() if j.type_of_check == "Platform"]
-        
-        location_names = [i.name for i in self.get_locations()]
-        for button, platform in platforms_with_button_on_them.keys():  # put a :) on every button platform
-            loc_name = f"Platform {button}-{platform}"
-            if loc_name in location_names:
-                self.get_location(loc_name).address = None # never let people go to these platforms to avoid buttons
-                self.get_location(loc_name).place_locked_item(
-                    self.create_item(":)")
-                )
-                possible_final_platforms.remove(loc_name)
+
                     
-        self.finish_platform = None
-        if self.options.final_platform.value == FinalPlatform.option_platform_1_5:
-            self.finish_platform = (1,5)
-        elif self.options.final_platform.value == FinalPlatform.option_platform_21_1:
-            self.finish_platform = (21,1)
-        elif self.options.final_platform.value == FinalPlatform.option_platform_29_2:
-            self.finish_platform = (29,2)
-        else:  # random
+        self.goal = None
+            # option_button_31_1 = 0
+            # option_button_1_1 = 1
+            # option_random_known_button = 2
+            # option_random_unknown_button = 3
+            # option_platform_1_5 = 4
+            # option_platform_21_1 = 5
+            # option_platform_29_2 = 6
+            # option_random_known_platform = 7
+            # option_random_unknown_platform = 8
+            # option_random_known = 9
+            # option_random_unknown = 10
+        if self.options.goal.value == Goal.option_button_31_1:
+            self.goal = ("B", (31,1))
+        elif self.options.goal.value == Goal.option_button_1_1:
+            self.goal = ("B", (1,1))
+        elif self.options.goal.value == Goal.option_random_known_button or self.options.goal.value == Goal.option_random_unknown_button:
+            valid_candidates = list(platforms_with_button_on_them.values())
+            finish_button = self.multiworld.random.choice(valid_candidates)
+            self.goal = ("B", (finish_button[0], finish_button[1]))
+        elif self.options.goal.value == Goal.option_platform_1_5:
+            self.goal = ("P", (1,5))
+        elif self.options.goal.value == Goal.option_platform_21_1:
+            self.goal = ("P", (21,1))
+        elif self.options.goal.value == Goal.option_platform_29_2:
+            self.goal = ("P", (29,2))
+        elif self.options.goal.value == Goal.option_random_known_platform or self.options.goal.value == Goal.option_random_unknown_platform:
             valid_candidates = possible_final_platforms
             finish_platform_name = self.multiworld.random.choice(valid_candidates)
-            self.finish_platform = (int(finish_platform_name.split(" ")[1].split("-")[0]), int(finish_platform_name.split(" ")[1].split("-")[1]))
-                
-        victory_location_name = f"Platform {self.finish_platform[0]}-{self.finish_platform[1]}"
+            self.goal = ("P", (int(finish_platform_name.split(" ")[1].split("-")[0]), int(finish_platform_name.split(" ")[1].split("-")[1])))
+        elif self.options.goal.value == Goal.option_random_known or self.options.goal.value == Goal.option_random_unknown:
+            if self.multiworld.random.random() < 0.5:
+                valid_candidates = list(platforms_with_button_on_them.values())
+                finish_button = self.multiworld.random.choice(valid_candidates)
+                self.goal = ("B", (finish_button[0], finish_button[1]))
+            else:
+                valid_candidates = possible_final_platforms
+                finish_platform_name = self.multiworld.random.choice(valid_candidates)
+                self.goal = ("P", (int(finish_platform_name.split(" ")[1].split("-")[0]), int(finish_platform_name.split(" ")[1].split("-")[1])))
+
+        victory_location_name = f"{'Button' if self.goal[0] == 'B' else 'Platform'} {self.goal[1][0]}-{self.goal[1][1]}"
         # self.get_location(victory_location_name).address = None
         self.get_location(victory_location_name).place_locked_item(
-            self.create_item("Final Platform")
+            self.create_item("Goal")
         )
-        self.multiworld.completion_condition[self.player] = lambda state: all([state.has("Final Platform", self.player), state.has("Grass", self.player, self.required_grass)])
+        self.multiworld.completion_condition[self.player] = lambda state: all([state.has("Goal", self.player), state.has("Grass", self.player, self.required_grass)])
 
         
         
@@ -574,8 +593,11 @@ class RefunctWorld(World):
                 
         slot_data["amount_grass"] = self.amount_of_grass
         slot_data["required_grass"] = self.required_grass
-        slot_data["finish_platform_c"] = self.finish_platform[0]
-        slot_data["finish_platform_p"] = self.finish_platform[1]
+        
+        slot_data["goal_t"] = self.goal[0]
+        slot_data["goal_c"] = self.goal[1][0]
+        slot_data["goal_p"] = self.goal[1][1]
+        slot_data["goal_known"] = self.options.goal.value not in [Goal.option_random_known, Goal.option_random_unknown, Goal.option_random_known_button, Goal.option_random_unknown_button, Goal.option_random_known_platform, Goal.option_random_unknown_platform]
         
         slot_data["minigames"] = self.minigames
         
@@ -589,7 +611,6 @@ class RefunctWorld(World):
         slot_data["death_link"] = self.options.death_link.value
         
         slot_data["ap_world_version"] = self.ap_world_version
-        slot_data["final_platform_known"] = self.options.final_platform.value != FinalPlatform.option_random_unknown
 
         return slot_data
 

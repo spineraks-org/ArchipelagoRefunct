@@ -23,22 +23,36 @@ class RequiredGrassPercentage(Range):
     range_start = 0
     range_end = 100
     
-class FinalPlatform(Choice):
-    """Sets which platform is the final platform that needs to be reached to win the game.
-    You can choose the following platforms:
+class Goal(Choice):
+    """
+    Sets which button or platform is the goal that needs to be reached to win the game.
+    You can choose the following:
+    - Button 31-1: the goal from the original, the golden button!
+    - Button 1-1: the first button in the game.
+    - random_known_button: a random button. The UI will show you which button it is.
+    - random_unknown_button: a random button. The UI will NOT show you which button it is but the button will have a yellow beam.
     - Platform 1-5: right next to the starting platform
     - Platform 21-1: easy to reach platform in Cluster 21 (bottom-left)
     - Platform 29-2: epic high platform in Cluster 29 for which you need Cluster 25 and jumppads (top-left)
-    - random_known: randomly chosen platform. The UI will show you which platform it is.
-    - random_unknown: randomly chosen platform. The UI will NOT show you which platform it is until you jump on it. You can !hint Final Platform and it will tell you the location.
+    - random_known_platform: randomly chosen platform. The UI will show you which platform it is.
+    - random_unknown_platform: randomly chosen platform. The UI will NOT show you which platform it is until you jump on it.
+    - random_known: a random button or platform. The UI will show you which one it is.
+    - random_unknown: a random button or platform. The UI will NOT show you which one it is.
+    Note: if you choose an unknown goal, you can !hint Goal and it will tell you the location.
     """
-    display_name = "Final Platform"
-    option_platform_1_5 = 0
-    option_platform_21_1 = 1
-    option_platform_29_2 = 2
-    option_random_known = 98
-    option_random_unknown = 99
-    default = 2
+    display_name = "Goal"
+    option_button_31_1 = 0
+    option_button_1_1 = 1
+    option_random_known_button = 2
+    option_random_unknown_button = 3
+    option_platform_1_5 = 4
+    option_platform_21_1 = 5
+    option_platform_29_2 = 6
+    option_random_known_platform = 7
+    option_random_unknown_platform = 8
+    option_random_known = 9
+    option_random_unknown = 10
+    default = 0
 
 class Cubes(Choice):
     """
@@ -207,7 +221,7 @@ class RefunctOptions(PerGameCommonOptions):
     required_grass: Removed
     amount_of_grass: AmountOfGrass
     required_grass_percentage: RequiredGrassPercentage
-    final_platform: FinalPlatform
+    goal: Goal
     
     cubes: Cubes
     extra_cubes: ExtraCubes
@@ -222,11 +236,11 @@ class RefunctOptions(PerGameCommonOptions):
     death_link: DeathLink
 
 refunct_option_groups = [
-    OptionGroup("Grass and Final Platform",
+    OptionGroup("Grass and Goal",
         [
             AmountOfGrass,
             RequiredGrassPercentage,
-            FinalPlatform,
+            Goal,
         ],
     ),
     OptionGroup(

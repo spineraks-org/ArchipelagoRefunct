@@ -16,7 +16,7 @@ class RefunctItem(Item):
 item_table = {f"Cluster {i}": ItemData(10000000 + i, ItemClassification.progression) for i in range(1, 32)}
 item_table["Grass"] = ItemData(9999999, ItemClassification.progression_deprioritized_skip_balancing) 
 item_table["Starting Platform"] = ItemData(9999998, ItemClassification.filler) 
-item_table["Final Platform"] = ItemData(9999997, ItemClassification.progression)
+item_table["Goal"] = ItemData(9999997, ItemClassification.progression)
 item_table[":)"] = ItemData(9999996, ItemClassification.filler)
 
 item_table["Ledge Grab"] = ItemData(9999990, ItemClassification.progression | ItemClassification.useful)
