@@ -45,7 +45,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "0.9.0"        
+    ap_world_version = "1.0.0"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
@@ -510,9 +510,9 @@ class RefunctWorld(World):
         victory_location_name = f"{'Button' if self.goal[0] == 'B' else 'Platform'} {self.goal[1][0]}-{self.goal[1][1]}"
         # self.get_location(victory_location_name).address = None
         self.get_location(victory_location_name).place_locked_item(
-            self.create_item("Goal")
+            self.create_item("Goal Location")
         )
-        self.multiworld.completion_condition[self.player] = lambda state: all([state.has("Goal", self.player), state.has("Grass", self.player, self.required_grass)])
+        self.multiworld.completion_condition[self.player] = lambda state: all([state.has("Goal Location", self.player), state.has("Grass", self.player, self.required_grass)])
 
         
         
@@ -597,7 +597,7 @@ class RefunctWorld(World):
         slot_data["goal_t"] = self.goal[0]
         slot_data["goal_c"] = self.goal[1][0]
         slot_data["goal_p"] = self.goal[1][1]
-        slot_data["goal_known"] = self.options.goal.value not in [Goal.option_random_known, Goal.option_random_unknown, Goal.option_random_known_button, Goal.option_random_unknown_button, Goal.option_random_known_platform, Goal.option_random_unknown_platform]
+        slot_data["goal_known"] = self.options.goal.value not in [Goal.option_random_unknown, Goal.option_random_unknown_button, Goal.option_random_unknown_platform]
         
         slot_data["minigames"] = self.minigames
         
