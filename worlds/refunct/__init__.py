@@ -45,7 +45,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "0.10.0"        
+    ap_world_version = "1.0.0"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
