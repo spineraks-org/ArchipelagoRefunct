@@ -30,7 +30,7 @@ class Goal(Choice):
     - Button 31-1: the goal from the original, the golden button!
     - Button 1-1: the first button in the game.
     - random_known_button: a random button. The UI will show you which button it is.
-    - random_unknown_button: a random button. The UI will NOT show you which button it is but the button will have a yellow beam.
+    - random_unknown_button: a random button. The UI will NOT show you which button it is until pressed.
     - Platform 1-5: right next to the starting platform
     - Platform 21-1: easy to reach platform in Cluster 21 (bottom-left)
     - Platform 29-2: epic high platform in Cluster 29 for which you need Cluster 25 and jumppads (top-left)
@@ -38,7 +38,7 @@ class Goal(Choice):
     - random_unknown_platform: randomly chosen platform. The UI will NOT show you which platform it is until you jump on it.
     - random_known: a random button or platform. The UI will show you which one it is.
     - random_unknown: a random button or platform. The UI will NOT show you which one it is.
-    Note: if you choose an unknown goal, you can !hint Goal and it will tell you the location.
+    Note: if you choose an unknown goal, you can !hint Goal Location and it will tell you the location.
     """
     display_name = "Goal"
     option_button_31_1 = 0
@@ -109,7 +109,7 @@ class NumberOfMinigames(Range):
     display_name = "Number of Minigames"
     default = -1
     range_start = -1
-    range_end = 7
+    range_end = 9
     
 class NerfMinigameChecks(Toggle):
     """
@@ -165,15 +165,19 @@ class MinigamesLikeliness(OptionCounter):
     There is no guarantee cubes are reachable so reset as needed.
     
     Climb Minigames:
-    There are three different Climb minigames that you can play when this option is selected; Line, Spiral and Chaos.
+    There are three different Climb minigames that you can play: Line, Spiral and Chaos.
     You will have to climb up 100 meters of randomly placed platforms, and you get checks for every 10 meters climbed.
     Each minigame has a slightly different pattern of platform placements.
-    Each minigame is unlocked separately and they all have their own checks.
-    This gamemode might need some skill and patience (which is why they are off by default) :)
+    These gamemodes might need some skill and patience (which is why they are off by default) :)
     
     Block Blub Minigame:
     This is the underwater version of Block Brawl!
     This is much easier and shorter than Block Brawl, it still has four color of cubes, but only 32 checks in total.
+    
+    Refunct Mountain Minigame:
+    The vanilla game, except there's no wall jump, ledge grab, lifts and pipes.
+    Instead, there is a dash! Press the buttons for checks.
+    PRESS E TO DASH, YOU (CURRENTLY) CANNOT REBIND THIS IN-GAME (which is why it's off by default)
     """
    
     display_name = "Likeliness of minigames"
@@ -184,8 +188,11 @@ class MinigamesLikeliness(OptionCounter):
         "Button Galore Minigame": int,
         "OG Randomizer Minigame": int,
         "Block Brawl Minigame": int,
-        "Climb Minigames": int,
+        "Climb Line Minigame": int,
+        "Climb Spiral Minigame": int,
+        "Climb Chaos Minigame": int,
         "Block Blub Minigame": int,
+        "Refunct Mountain Minigame": int,
     })
     min = 0
     default = {
@@ -194,8 +201,11 @@ class MinigamesLikeliness(OptionCounter):
         "Button Galore Minigame": 1,
         "OG Randomizer Minigame": 3,
         "Block Brawl Minigame": 4,
-        "Climb Minigames": 0,
+        "Climb Line Minigame": 0,
+        "Climb Spiral Minigame": 0,
+        "Climb Chaos Minigame": 0,
         "Block Blub Minigame": 3,
+        "Refunct Mountain Minigame": 0,
     }
 
 

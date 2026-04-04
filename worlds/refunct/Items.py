@@ -51,6 +51,8 @@ item_table["Block Blub Minigame Blues"] = ItemData(9999922, ItemClassification.p
 item_table["Block Blub Minigame Greens"] = ItemData(9999923, ItemClassification.progression)
 item_table["Block Blub Minigame Yellows"] = ItemData(9999924, ItemClassification.progression)
 
+item_table["Refunct Mountain Minigame"] = ItemData(9999910, ItemClassification.progression)
+
 # for i in range(0, 101):
 #     item_table[f"DEBUGA {i}"] = ItemData(20000000 + i, ItemClassification.filler)
 #     item_table[f"DEBUGB {i}"] = ItemData(30000000 + i, ItemClassification.filler)

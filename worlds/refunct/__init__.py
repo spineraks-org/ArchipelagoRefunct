@@ -140,12 +140,24 @@ class RefunctWorld(World):
                 for _ in range(20 - num_unlocks):
                     items_to_add.append("Flower")
                     
-        if "Climb Minigames" in self.minigames:
-            for style in ["Line", "Spiral", "Chaos"]:
-                for _ in range(num_unlocks):
-                    items_to_add.append(f"Climb {style} Minigame")
-                for _ in range(10 - num_unlocks):
-                    items_to_add.append("Flower")
+        if "Climb Line Minigame" in self.minigames:
+            style = "Line"
+            for _ in range(num_unlocks):
+                items_to_add.append(f"Climb {style} Minigame")
+            for _ in range(10 - num_unlocks):
+                items_to_add.append("Flower")
+        if "Climb Spiral Minigame" in self.minigames:
+            style = "Spiral"
+            for _ in range(num_unlocks):
+                items_to_add.append(f"Climb {style} Minigame")
+            for _ in range(10 - num_unlocks):
+                items_to_add.append("Flower")
+        if "Climb Chaos Minigame" in self.minigames:
+            style = "Chaos"
+            for _ in range(num_unlocks):
+                items_to_add.append(f"Climb {style} Minigame")
+            for _ in range(10 - num_unlocks):
+                items_to_add.append("Flower")
                     
         if "Block Blub Minigame" in self.minigames:
             for color in ["Reds", "Blues", "Greens", "Yellows"]:
@@ -153,6 +165,12 @@ class RefunctWorld(World):
                     items_to_add.append(f"Block Blub Minigame {color}")
                 for _ in range(8 - num_unlocks):
                     items_to_add.append("Flower")
+                    
+        if "Refunct Mountain Minigame" in self.minigames:
+            for _ in range(num_unlocks):
+                items_to_add.append("Refunct Mountain Minigame")
+            for _ in range(37 - num_unlocks):
+                items_to_add.append("Flower")
                 
         if self.options.nerf_minigame_checks.value:
             if "Vanilla Minigame" in self.minigames:
@@ -192,8 +210,26 @@ class RefunctWorld(World):
                         self.get_location(loc).place_locked_item(
                             self.create_item("Flower")
                         )
-            if "Climb Minigames" in self.minigames:
-                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb" in i.name and "Minigame" in i.name]
+            if "Climb Line Minigame" in self.minigames:
+                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Line" in i.name and "Minigame" in i.name]
+                location_names_el = self.multiworld.random.sample(location_names, 20)
+                for loc in location_names_el:
+                    if "Flower" in items_to_add:
+                        items_to_add.remove("Flower")
+                        self.get_location(loc).place_locked_item(
+                            self.create_item("Flower")
+                        )
+            if "Climb Spiral Minigame" in self.minigames:
+                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Spiral" in i.name and "Minigame" in i.name]
+                location_names_el = self.multiworld.random.sample(location_names, 20)
+                for loc in location_names_el:
+                    if "Flower" in items_to_add:
+                        items_to_add.remove("Flower")
+                        self.get_location(loc).place_locked_item(
+                            self.create_item("Flower")
+                        )
+            if "Climb Chaos Minigame" in self.minigames:
+                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Chaos" in i.name and "Minigame" in i.name]
                 location_names_el = self.multiworld.random.sample(location_names, 20)
                 for loc in location_names_el:
                     if "Flower" in items_to_add:
@@ -204,6 +240,15 @@ class RefunctWorld(World):
             if "Block Blub Minigame" in self.minigames:
                 location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Block Blub Minigame" in i.name]
                 location_names_el = self.multiworld.random.sample(location_names, 24)
+                for loc in location_names_el:
+                    if "Flower" in items_to_add:
+                        items_to_add.remove("Flower")
+                        self.get_location(loc).place_locked_item(
+                            self.create_item("Flower")
+                        )
+            if "Refunct Mountain Minigame" in self.minigames:
+                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Refunct Mountain Minigame" in i.name]
+                location_names_el = self.multiworld.random.sample(location_names, 27)
                 for loc in location_names_el:
                     if "Flower" in items_to_add:
                         items_to_add.remove("Flower")
@@ -330,12 +375,26 @@ class RefunctWorld(World):
                     region_object = self.multiworld.get_region(f"Block Brawl Minigame {color}", self.player)
                     region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
                 
-        if "Climb Minigames" in self.minigames:
-            for style in ["Line", "Spiral", "Chaos"]:
-                self.multiworld.regions.append(Region(f"Climb {style} Minigame", self.player, self.multiworld))
-                for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == f"Climb {style}"]:
-                    region_object = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
-                    region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
+        if "Climb Line Minigame" in self.minigames:
+            style = "Line"
+            self.multiworld.regions.append(Region(f"Climb {style} Minigame", self.player, self.multiworld))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == f"Climb {style}"]:
+                region_object = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+                region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
+                
+        if "Climb Spiral Minigame" in self.minigames:
+            style = "Spiral"
+            self.multiworld.regions.append(Region(f"Climb {style} Minigame", self.player, self.multiworld))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == f"Climb {style}"]:
+                region_object = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+                region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
+                
+        if "Climb Chaos Minigame" in self.minigames:
+            style = "Chaos"
+            self.multiworld.regions.append(Region(f"Climb {style} Minigame", self.player, self.multiworld))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == f"Climb {style}"]:
+                region_object = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+                region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
         
         if "Block Blub Minigame" in self.minigames:
             for i, color in enumerate(["Reds", "Blues", "Greens", "Yellows"], start=1):
@@ -343,6 +402,12 @@ class RefunctWorld(World):
                 for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Block Blub" and b.main_nr == i]:
                     region_object = self.multiworld.get_region(f"Block Blub Minigame {color}", self.player)
                     region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
+                    
+        if "Refunct Mountain Minigame" in self.minigames:
+            self.multiworld.regions.append(Region("Refunct Mountain Minigame", self.player, self.multiworld))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Refunct Mountain"]:
+                region_object = self.multiworld.get_region("Refunct Mountain Minigame", self.player)
+                region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
         
 
         
@@ -554,13 +619,27 @@ class RefunctWorld(World):
                     location.access_rule = lambda state, num_colors_needed=num_colors_needed: all([
                         state.has_group_unique(f"Block Brawl Cubes", self.player, num_colors_needed),
                     ])
-                    
-        if "Climb Minigames" in self.minigames:
+                                        
+        if "Climb Line Minigame" in self.minigames:
             region_a = self.multiworld.get_region("10010102", self.player)
-            for style in ["Line", "Spiral", "Chaos"]:
-                region_b = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
-                region_a.connect(region_b, f"Enter Climb {style} Minigame", 
-                    lambda state, style=style: state.has(f"Climb {style} Minigame", self.player))
+            style = "Line"
+            region_b = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+            region_a.connect(region_b, f"Enter Climb {style} Minigame", 
+                lambda state, style=style: state.has(f"Climb {style} Minigame", self.player))
+                    
+        if "Climb Spiral Minigame" in self.minigames:
+            region_a = self.multiworld.get_region("10010102", self.player)
+            style = "Spiral"
+            region_b = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+            region_a.connect(region_b, f"Enter Climb {style} Minigame", 
+                lambda state, style=style: state.has(f"Climb {style} Minigame", self.player))
+                    
+        if "Climb Chaos Minigame" in self.minigames:
+            region_a = self.multiworld.get_region("10010102", self.player)
+            style = "Chaos"
+            region_b = self.multiworld.get_region(f"Climb {style} Minigame", self.player)
+            region_a.connect(region_b, f"Enter Climb {style} Minigame", 
+                lambda state, style=style: state.has(f"Climb {style} Minigame", self.player))
                     
         if "Block Blub Minigame" in self.minigames:
             region_a = self.multiworld.get_region("10010102", self.player)
@@ -575,6 +654,12 @@ class RefunctWorld(World):
                     location.access_rule = lambda state, num_colors_needed=num_colors_needed: all([
                         state.has_group_unique(f"Block Blub Cubes", self.player, num_colors_needed),
                     ])
+            
+        if "Refunct Mountain Minigame" in self.minigames:
+            region_a = self.multiworld.get_region("10010102", self.player)
+            region_b = self.multiworld.get_region("Refunct Mountain Minigame", self.player)
+            region_a.connect(region_b, f"Enter Refunct Mountain Minigame", 
+                lambda state: state.has("Refunct Mountain Minigame", self.player))
         
 
     def create_item(self, name: str, force_useful = False) -> Item:

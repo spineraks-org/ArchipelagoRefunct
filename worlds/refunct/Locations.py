@@ -228,6 +228,9 @@ location_table = {
     **{f"Block Blub Minigame: Yellows Score {j}": LocData(10100000 + 4 * 1000 + j, 4, j, "Minigame", "Block Blub")
        for j in block_blub_scores},
     
+    **{f"Refunct Mountain Minigame: Button {i}-{j}": LocData(10110000 + i * 100 + j, i, j, "Minigame", "Refunct Mountain")
+       for i in range(1, 32) for j in range(1, number_buttons_per_cluster[i] + 1)},
+    
 }
     
 platforms_with_button_ids = []
