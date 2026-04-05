@@ -307,6 +307,10 @@ class RefunctWorld(World):
                 self.minigames.append(choice)
                 population.pop(idx)
                 weights.pop(idx)
+                                
+            # Seeker Minigame info
+            all_platforms = platforms_without_button_ids.copy() + platforms_with_button_ids.copy()
+            self.seeker_platforms = self.multiworld.random.sample(all_platforms, 10)
 
         regions = []
         
@@ -342,10 +346,6 @@ class RefunctWorld(World):
             for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Vanilla"]:
                 region_object = self.multiworld.get_region("Vanilla Minigame", self.player)
                 region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
-                
-        # Seeker Minigame info
-        all_platforms = platforms_without_button_ids.copy() + platforms_with_button_ids.copy()
-        self.seeker_platforms = self.multiworld.random.sample(all_platforms, 10)
         
         if "Seeker Minigame" in self.minigames:
             self.multiworld.regions.append(Region("Seeker Minigame", self.player, self.multiworld))
