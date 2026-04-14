@@ -139,6 +139,7 @@ class MinigamesLikeliness(OptionCounter):
     You can switch between Move Rando (main game) and the minigames in the Archipelago menu in-game.
     This setting determines the likeliness of each minigame to be included.
     The default settings are tweaked already so that the "better" minigames are more likely to appear.
+    You can set the likeliness of a minigame to 0 and it will never appear. 
     
     Vanilla Minigame:
     Adding this minigame will let you play the original vanilla refunct game, once you unlock it.

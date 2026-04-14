@@ -210,33 +210,7 @@ class RefunctWorld(World):
                         self.get_location(loc).place_locked_item(
                             self.create_item("Flower")
                         )
-            if "Climb Line Minigame" in self.minigames:
-                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Line" in i.name and "Minigame" in i.name]
-                location_names_el = self.multiworld.random.sample(location_names, 20)
-                for loc in location_names_el:
-                    if "Flower" in items_to_add:
-                        items_to_add.remove("Flower")
-                        self.get_location(loc).place_locked_item(
-                            self.create_item("Flower")
-                        )
-            if "Climb Spiral Minigame" in self.minigames:
-                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Spiral" in i.name and "Minigame" in i.name]
-                location_names_el = self.multiworld.random.sample(location_names, 20)
-                for loc in location_names_el:
-                    if "Flower" in items_to_add:
-                        items_to_add.remove("Flower")
-                        self.get_location(loc).place_locked_item(
-                            self.create_item("Flower")
-                        )
-            if "Climb Chaos Minigame" in self.minigames:
-                location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Climb Chaos" in i.name and "Minigame" in i.name]
-                location_names_el = self.multiworld.random.sample(location_names, 20)
-                for loc in location_names_el:
-                    if "Flower" in items_to_add:
-                        items_to_add.remove("Flower")
-                        self.get_location(loc).place_locked_item(
-                            self.create_item("Flower")
-                        )
+            # climb line, spiral, and chaos don't need locked flowers since they have so few checks.
             if "Block Blub Minigame" in self.minigames:
                 location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Block Blub Minigame" in i.name]
                 location_names_el = self.multiworld.random.sample(location_names, 24)
