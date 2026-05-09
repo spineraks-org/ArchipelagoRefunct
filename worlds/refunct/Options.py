@@ -166,7 +166,7 @@ class MinigamesLikeliness(OptionCounter):
     There is no guarantee cubes are reachable so reset as needed.
     
     Climb Minigames:
-    There are three different Climb minigames that you can play: Line, Spiral and Chaos.
+    There are different Climb minigames that you can play: Line, Spiral, Chaos and Narrow.
     You will have to climb up 100 meters of randomly placed platforms, and you get checks for every 10 meters climbed.
     Each minigame has a slightly different pattern of platform placements.
     These gamemodes might need some skill and patience (which is why they are off by default) :)
@@ -179,6 +179,13 @@ class MinigamesLikeliness(OptionCounter):
     The vanilla game, except there's no wall jump, ledge grab, lifts and pipes.
     Instead, there is a dash! Press the buttons for checks.
     PRESS E TO DASH, YOU (CURRENTLY) CANNOT REBIND THIS IN-GAME (which is why it's off by default)
+    Tip: use steam controller settings to map dash to a button of your choice.
+    
+    Rando Mountain Minigame:
+    Randomized button order in a world with *only* jump and dash (no swim or anything else).
+    Press the buttons for checks.
+    PRESS E TO DASH, YOU (CURRENTLY) CANNOT REBIND THIS IN-GAME (which is why it's off by default)
+    Tip: use steam controller settings to map dash to a button of your choice.
     """
    
     display_name = "Likeliness of minigames"
@@ -192,8 +199,10 @@ class MinigamesLikeliness(OptionCounter):
         "Climb Line Minigame": int,
         "Climb Spiral Minigame": int,
         "Climb Chaos Minigame": int,
+        "Climb Narrow Minigame": int,
         "Block Blub Minigame": int,
         "Refunct Mountain Minigame": int,
+        "Rando Mountain Minigame": int,
     })
     min = 0
     default = {
@@ -205,8 +214,10 @@ class MinigamesLikeliness(OptionCounter):
         "Climb Line Minigame": 0,
         "Climb Spiral Minigame": 0,
         "Climb Chaos Minigame": 0,
+        "Climb Narrow Minigame": 0,
         "Block Blub Minigame": 3,
         "Refunct Mountain Minigame": 0,
+        "Rando Mountain Minigame": 0,
     }
 
 
@@ -226,6 +237,39 @@ class Traps(Choice):
     option_all = 2
     default = 1
 
+class ReplaceFlowersByTraps(Range):
+    """
+    This option determines what percentage of flowers are replaced by traps.
+    You can use positive numbers (1 (1%) to 100 (100%)) to replace flowers by pretty traps only.
+    You can use negative numbers (-1 (1%) to -100 (100%)) to replace flowers by all traps (including gameplay affecting ones).
+    Example: -90 means that 90% of flowers are replaced by traps, and they can be pretty or gameplay affecting.
+    """
+    display_name = "Replace Flowers by Traps"
+    default = 0
+    range_start = -100
+    range_end = 100
+    
+class RenameFlowers(Choice):
+    """
+    This option changes "Flower" to names of actual flowers such as "Rose" and "Tulip".
+    You can choose between the English or the Latin names of the flowers.
+    """
+    display_name = "Replace Flowers by Actual Flowers"
+    option_none = 0
+    option_english = 1
+    option_latin = 2
+    default = 0
+
+class RenameGrass(Choice):
+    """
+    This option changes "Grass" to names of actual grass types such as "Fine fescue" and "Kentucky bluegrass".
+    You can choose between the English or the Latin names of the grass types.
+    """
+    display_name = "Replace Grass by Actual Grass"
+    option_none = 0
+    option_english = 1
+    option_latin = 2
+    default = 0
     
 @dataclass
 class RefunctOptions(PerGameCommonOptions):
@@ -244,6 +288,9 @@ class RefunctOptions(PerGameCommonOptions):
     minigames_likeliness: MinigamesLikeliness
     
     traps: Traps
+    replace_flowers_by_traps: ReplaceFlowersByTraps
+    rename_grass: RenameGrass
+    rename_flowers: RenameFlowers
     death_link: DeathLink
 
 refunct_option_groups = [
@@ -272,9 +319,12 @@ refunct_option_groups = [
         ],
     ),
     OptionGroup(
-        "Traps and Deathlink",
+        "Fillers, Traps and Deathlink",
         [
             Traps,
+            ReplaceFlowersByTraps,
+            RenameGrass,
+            RenameFlowers,
             DeathLink,
         ],
     ),
