@@ -109,7 +109,7 @@ class NumberOfMinigames(Range):
     display_name = "Number of Minigames"
     default = -1
     range_start = -1
-    range_end = 9
+    range_end = 11
     
 class NerfMinigameChecks(Toggle):
     """
@@ -258,6 +258,7 @@ class RenameFlowers(Choice):
     option_none = 0
     option_english = 1
     option_latin = 2
+    option_both = 3
     default = 0
 
 class RenameGrass(Choice):
@@ -269,6 +270,7 @@ class RenameGrass(Choice):
     option_none = 0
     option_english = 1
     option_latin = 2
+    option_both = 3
     default = 0
     
 @dataclass

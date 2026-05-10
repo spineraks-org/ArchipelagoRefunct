@@ -46,7 +46,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "1.1.0"        
+    ap_world_version = "1.1.1"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
@@ -299,8 +299,8 @@ class RefunctWorld(World):
                     items_to_add.append(self.multiworld.random.choice(trap_items))
             
         actual_flowers = []        
-        if self.options.rename_flowers.value == RenameFlowers.option_english:
-            actual_flowers = [
+        if self.options.rename_flowers.value == RenameFlowers.option_english or self.options.rename_flowers.value == RenameFlowers.option_both:
+            actual_flowers += [
                 "Rose",
                 "Tulip",
                 "Sunflower",
@@ -312,8 +312,8 @@ class RefunctWorld(World):
                 "Peony",
                 "Chrysanthemum",
             ]
-        if self.options.rename_flowers.value == RenameFlowers.option_latin:
-            actual_flowers = [
+        if self.options.rename_flowers.value == RenameFlowers.option_latin or self.options.rename_flowers.value == RenameFlowers.option_both:
+            actual_flowers += [
                 "Rosa",
                 "Tulipa",
                 "Helianthus annuus",
@@ -331,8 +331,8 @@ class RefunctWorld(World):
                     items_to_add[i] = self.multiworld.random.choice(actual_flowers)
         
         actual_grasses = []
-        if self.options.rename_grass.value == RenameGrass.option_english:
-            actual_grasses = [
+        if self.options.rename_grass.value == RenameGrass.option_english or self.options.rename_grass.value == RenameGrass.option_both:
+            actual_grasses += [
                 "Fine fescue",
                 "Tall fescue",
                 "Kentucky bluegrass",
@@ -355,8 +355,8 @@ class RefunctWorld(World):
                 "Feather reed grass",
                 "Mexican feather grass",
             ]
-        if self.options.rename_grass.value == RenameGrass.option_latin:
-            actual_grasses = [
+        if self.options.rename_grass.value == RenameGrass.option_latin or self.options.rename_grass.value == RenameGrass.option_both:
+            actual_grasses += [
                 "Festuca rubra",
                 "Festuca arundinacea",
                 "Poa pratensis",
