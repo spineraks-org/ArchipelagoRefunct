@@ -219,18 +219,18 @@ class MinigamesLikeliness(OptionCounter):
     })
     min = 0
     default = {
-        "Vanilla Minigame": 5,
-        "Seeker Minigame": 5,
-        "Button Galore Minigame": 3,
-        "OG Randomizer Minigame": 10,
-        "Block Brawl Minigame": 10,
+        "Vanilla Minigame": 2,
+        "Seeker Minigame": 2,
+        "Button Galore Minigame": 2,
+        "OG Randomizer Minigame": 5,
+        "Block Brawl Minigame": 5,
         "Climb Line Minigame": 1,
         "Climb Spiral Minigame": 1,
         "Climb Chaos Minigame": 1,
         "Climb Narrow Minigame": 1,
-        "Block Blub Minigame": 10,
-        "Refunct Mountain Minigame": 1,
-        "Rando Mountain Minigame": 10,
+        "Block Blub Minigame": 2,
+        "Refunct Mountain Minigame": 2,
+        "Rando Mountain Minigame": 5,
         "Funny Bridge Game Minigame": 1,
         "Clique": 1,
     }
