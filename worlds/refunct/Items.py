@@ -80,6 +80,7 @@ item_table[f"Starry sky"] = ItemData(9999006, ItemClassification.trap)
 item_table[f"Red sky"] = ItemData(9999007, ItemClassification.trap)
 item_table[f"Hurricane"] = ItemData(9999008, ItemClassification.trap)
 item_table[f"Blurrrrgh"] = ItemData(9999009, ItemClassification.trap)
+item_table[f"Ascend"] = ItemData(9999010, ItemClassification.trap)
 
 english_flowers = [
     "Rose",

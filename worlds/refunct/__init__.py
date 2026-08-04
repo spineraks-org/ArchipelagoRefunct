@@ -47,7 +47,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "1.2.2"        
+    ap_world_version = "1.3.0"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
@@ -291,11 +291,12 @@ class RefunctWorld(World):
                 "Red sky",
                 "Hurricane",
             ] * 2
-        if self.options.traps == Traps.option_all:
+        if self.options.traps == Traps.option_gameplay or Traps.option_all:
             trap_items += [
                 "Slo-mo",
                 "Fast-mo",
                 "Blurrrrgh",
+                "Ascend",
             ] * 2
         
         if trap_items:
@@ -320,6 +321,7 @@ class RefunctWorld(World):
                     "Slo-mo",
                     "Fast-mo",
                     "Blurrrrgh",
+                    "Ascend",
                 ]
             # replace flowers by a random trap:
             for _ in range(number_change):
@@ -1069,6 +1071,8 @@ class RefunctWorld(World):
         slot_data["death_link"] = self.options.death_link.value
         
         slot_data["ap_world_version"] = self.ap_world_version
+        
+        slot_data["see_other_players"] = self.options.see_other_players.value
 
         return slot_data
 
