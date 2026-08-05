@@ -253,13 +253,16 @@ class Traps(Choice):
     "none" adds no traps at all.
     "pretty" adds pretty traps that visually change the game for 60 seconds:
     Dark skies, No skylight, Disco sky, Starry sky, Red sky, Hurricane
-    "all" adds pretty traps and also adds gameplay affecting traps that last for 30 seconds:
-    Slo-mo, Fast-mo, Blurrrrgh.
+    "gameplay" adds gameplay traps that impact your gameplay for up to 30 seconds:
+    Slo-mo, Fast-mo, Blurrrrgh, Ascend
+    "all" adds all traps
+    
     """
     display_name = "Traps"
     option_none = 0
     option_pretty = 1
-    option_all = 2
+    option_gameplay = 2
+    option_all = 3
     default = 1
 
 class ReplaceFlowersByTraps(Range):
@@ -298,6 +301,19 @@ class RenameGrass(Choice):
     option_both = 3
     default = 0
     
+class SeeOtherPlayers(Range):
+    """
+    When other players have this on too, you can see them walking around in your world!
+    This option is the number of other players you can see. 0 means it is off.
+    You can probably just pick a large number, but the game might lag if you pick too many.
+    Don't worry, you can change this setting in-game too!
+    """
+    display_name = "See Other Players"
+    default = 0
+    range_start = 0
+    range_end = 100
+    
+    
 @dataclass
 class RefunctOptions(PerGameCommonOptions):
     required_grass: Removed
@@ -314,6 +330,8 @@ class RefunctOptions(PerGameCommonOptions):
     number_of_unlocks_per_minigame: NumberOfUnlocksPerMinigame
     minigames_likeliness: MinigamesLikeliness
     # just_clique: JustClique
+    
+    see_other_players: SeeOtherPlayers
     
     traps: Traps
     replace_flowers_by_traps: ReplaceFlowersByTraps
@@ -346,6 +364,12 @@ refunct_option_groups = [
             MinigamesLikeliness,
             # JustClique,
         ],
+    ),
+    OptionGroup(
+        "See Other Players",
+        [
+            SeeOtherPlayers,
+        ]
     ),
     OptionGroup(
         "Fillers, Traps and Deathlink",

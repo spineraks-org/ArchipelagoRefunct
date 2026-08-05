@@ -47,7 +47,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "1.2.2"        
+    ap_world_version = "1.3.0"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
@@ -291,11 +291,12 @@ class RefunctWorld(World):
                 "Red sky",
                 "Hurricane",
             ] * 2
-        if self.options.traps == Traps.option_all:
+        if self.options.traps == Traps.option_gameplay or Traps.option_all:
             trap_items += [
                 "Slo-mo",
                 "Fast-mo",
                 "Blurrrrgh",
+                "Ascend",
             ] * 2
         
         if trap_items:
@@ -320,6 +321,7 @@ class RefunctWorld(World):
                     "Slo-mo",
                     "Fast-mo",
                     "Blurrrrgh",
+                    "Ascend",
                 ]
             # replace flowers by a random trap:
             for _ in range(number_change):
@@ -875,6 +877,7 @@ class RefunctWorld(World):
 
         if hasattr(self.multiworld, "re_gen_passthrough"):
             self.goal = [self.regen["goal_t"], (self.regen["goal_c"], self.regen["goal_p"])]
+            self.goal_known = self.regen["goal_known"]
         else:
             self.goal = None
                 # option_button_31_1 = 0
@@ -915,13 +918,19 @@ class RefunctWorld(World):
                     valid_candidates = possible_final_platforms
                     finish_platform_name = self.multiworld.random.choice(valid_candidates)
                     self.goal = ("P", (int(finish_platform_name.split(" ")[1].split("-")[0]), int(finish_platform_name.split(" ")[1].split("-")[1])))
+            self.goal_known = self.options.goal.value not in [Goal.option_random_unknown, Goal.option_random_unknown_button, Goal.option_random_unknown_platform]
 
         victory_location_name = f"{'Button' if self.goal[0] == 'B' else 'Platform'} {self.goal[1][0]}-{self.goal[1][1]}"
         # self.get_location(victory_location_name).address = None
         self.get_location(victory_location_name).place_locked_item(
             self.create_item("Goal Location")
         )
-        self.multiworld.completion_condition[self.player] = lambda state: all([state.has("Goal Location", self.player), state.has_group("Grasses", self.player, self.required_grass)])
+        if self.goal_known:
+            self.multiworld.completion_condition[self.player] = lambda state: \
+                all([state.can_reach_location(victory_location_name, self.player), state.has_group("Grasses", self.player, self.required_grass)])
+        else:
+            self.multiworld.completion_condition[self.player] = lambda state: \
+                all([state.has("Goal Location", self.player), state.has_group("Grasses", self.player, self.required_grass)])
 
         
         
@@ -1052,7 +1061,7 @@ class RefunctWorld(World):
             slot_data["goal_t"] = self.goal[0]
             slot_data["goal_c"] = self.goal[1][0]
             slot_data["goal_p"] = self.goal[1][1]
-            slot_data["goal_known"] = self.options.goal.value not in [Goal.option_random_unknown, Goal.option_random_unknown_button, Goal.option_random_unknown_platform]
+            slot_data["goal_known"] = self.goal_known
             
         slot_data["cubes"] = self.options.cubes.value
         slot_data["extra_cubes"] = self.options.extra_cubes.value
@@ -1069,6 +1078,8 @@ class RefunctWorld(World):
         slot_data["death_link"] = self.options.death_link.value
         
         slot_data["ap_world_version"] = self.ap_world_version
+        
+        slot_data["see_other_players"] = self.options.see_other_players.value
 
         return slot_data
 
