@@ -235,47 +235,44 @@ class MinigamesLikeliness(OptionCounter):
         "Clique": 1,
     }
 
-# class JustClique(Toggle):
-#     """
-#     When enabled, the ONLY thing in this ENTIRE game is JUST Clique.
-#     No other gamemodes, no other minigames, JUST Clique in Refunct.
-#     ALL other settings are ignored.
-#     So the ENTIRE game is just one free item and one button.
-#     """
-#     display_name = "Just Clique"
-#     default = False
 
-
-class Traps(Choice):
+class EffectsAndTraps(OptionCounter):
     """
-    This option determines which traps are added to the game. 
-    Each trap is added twice and replaces a "flower" filler item, if there are enough flowers.
-    "none" adds no traps at all.
-    "pretty" adds pretty traps that visually change the game for 60 seconds:
-    Dark skies, No skylight, Disco sky, Starry sky, Red sky, Hurricane
-    "gameplay" adds gameplay traps that impact your gameplay for up to 30 seconds:
-    Slo-mo, Fast-mo, Blurrrrgh, Ascend
-    "all" adds all traps
+    Refunct has many effect- and trap items. This option will replace flowers by them.
+    This option determines the amount each of them is added.
+    An effect is usually just a pretty visual effect.
+    A trap will affect the gameplay a bit more.
+    Don't worry if you put too many, 
+    """
+   
+    display_name = "Effects and Traps"
+    # all keys must be present and values must be integers >= 0
+    schema = Schema({
+        "Effect - Dark skies": int,
+        "Effect - No skylight": int,
+        "Effect - Starry sky": int,
+        "Effect - Red sky": int,
+        "Effect - Hurricane": int,
+        "Trap - Slo-mo": int,
+        "Trap - Fast-mo": int,
+        "Trap - Blurrrgh": int,
+        "Trap - Ascend": int,
+        "Trap - Depthless": int,
+    })
+    min = 0
+    default = {
+        "Effect - Dark skies": 3,
+        "Effect - No skylight": 3,
+        "Effect - Starry sky": 3,
+        "Effect - Red sky": 3,
+        "Effect - Hurricane": 3,
+        "Trap - Slo-mo": 1,
+        "Trap - Fast-mo": 1,
+        "Trap - Blurrrgh": 1,
+        "Trap - Ascend": 1,
+        "Trap - Depthless": 1,
+    }
     
-    """
-    display_name = "Traps"
-    option_none = 0
-    option_pretty = 1
-    option_gameplay = 2
-    option_all = 3
-    default = 1
-
-class ReplaceFlowersByTraps(Range):
-    """
-    This option determines what percentage of flowers are replaced by traps.
-    You can use positive numbers (1 (1%) to 100 (100%)) to replace flowers by pretty traps only.
-    You can use negative numbers (-1 (1%) to -100 (100%)) to replace flowers by all traps (including gameplay affecting ones).
-    Example: -90 means that 90% of flowers are replaced by traps, and they can be pretty or gameplay affecting.
-    """
-    display_name = "Replace Flowers by Traps"
-    default = 0
-    range_start = -100
-    range_end = 100
     
 class RenameFlowers(Choice):
     """
@@ -333,8 +330,7 @@ class RefunctOptions(PerGameCommonOptions):
     
     see_other_players: SeeOtherPlayers
     
-    traps: Traps
-    replace_flowers_by_traps: ReplaceFlowersByTraps
+    effects_and_traps: EffectsAndTraps
     rename_grass: RenameGrass
     rename_flowers: RenameFlowers
     death_link: DeathLink
@@ -374,8 +370,7 @@ refunct_option_groups = [
     OptionGroup(
         "Fillers, Traps and Deathlink",
         [
-            Traps,
-            ReplaceFlowersByTraps,
+            EffectsAndTraps,
             RenameGrass,
             RenameFlowers,
             DeathLink,
