@@ -248,29 +248,29 @@ class EffectsAndTraps(OptionCounter):
     display_name = "Effects and Traps"
     # all keys must be present and values must be integers >= 0
     schema = Schema({
-        "Effect - Dark skies": int,
-        "Effect - No skylight": int,
-        "Effect - Starry sky": int,
-        "Effect - Red sky": int,
-        "Effect - Hurricane": int,
-        "Trap - Slo-mo": int,
-        "Trap - Fast-mo": int,
-        "Trap - Blurrrgh": int,
-        "Trap - Ascend": int,
-        "Trap - Depthless": int,
+        "Dark Skies": int,
+        "No Skylight": int,
+        "Starry Sky": int,
+        "Red Sky": int,
+        "Hurricane": int,
+        "Slo-mo Trap": int,
+        "Fast-mo Trap": int,
+        "Blurrrgh Trap": int,
+        "Ascend Trap": int,
+        "Depthless Trap": int,
     })
     min = 0
     default = {
-        "Effect - Dark skies": 3,
-        "Effect - No skylight": 3,
-        "Effect - Starry sky": 3,
-        "Effect - Red sky": 3,
-        "Effect - Hurricane": 3,
-        "Trap - Slo-mo": 1,
-        "Trap - Fast-mo": 1,
-        "Trap - Blurrrgh": 1,
-        "Trap - Ascend": 1,
-        "Trap - Depthless": 1,
+        "Dark Skies": 3,
+        "No Skylight": 3,
+        "Starry Sky": 3,
+        "Red Sky": 3,
+        "Hurricane": 3,
+        "Slo-mo Trap": 1,
+        "Fast-mo Trap": 1,
+        "Blurrrgh Trap": 1,
+        "Ascend Trap": 1,
+        "Depthless Trap": 1,
     }
     
     
