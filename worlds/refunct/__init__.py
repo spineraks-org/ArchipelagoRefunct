@@ -47,7 +47,7 @@ class RefunctWorld(World):
     
     item_name_groups = item_groups
 
-    ap_world_version = "1.4.0"        
+    ap_world_version = "1.5.0"        
         
     def get_filler_item_name(self) -> str:
         return ":)"
@@ -212,7 +212,13 @@ class RefunctWorld(World):
         if "Clique" in self.minigames:
             items_to_add.append("Clique: Button Activation")
             items_to_add.append("Clique: Feeling of Satisfaction")
-                
+            
+        if "Custom Minigame" in self.minigames:
+            for _ in range(num_unlocks):
+                items_to_add.append("Custom Minigame")
+            for _ in range(37 - num_unlocks):
+                items_to_add.append("Flower")
+                   
         if self.options.nerf_minigame_checks.value:
             if "Vanilla Minigame" in self.minigames:
                 location_names = [i.name for i in self.multiworld.get_locations(self.player) if "Vanilla Minigame" in i.name]
@@ -266,7 +272,12 @@ class RefunctWorld(World):
                         items_to_add.remove("Flower")
                         locs_force_filler.append(loc)
             # Funny Bridge Game Minigame and Clique don't need locked flowers since they have so few checks.
-        
+            if "Custom Minigame" in self.minigames:
+                for _ in range(num_unlocks):
+                    items_to_add.append("Custom Minigame")
+                for _ in range(37 - num_unlocks):
+                    items_to_add.append("Flower")
+                
         for loc in locs_force_filler:
             items_to_add.append("Flower")                        
         
@@ -541,7 +552,12 @@ class RefunctWorld(World):
             for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Clique"]:
                 region_object = self.multiworld.get_region("Clique", self.player)
                 region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
-
+            
+        if "Custom Minigame" in self.minigames:
+            self.multiworld.regions.append(Region("Custom Minigame", self.player, self.multiworld))
+            for loc_name, loc_data in [(a, b) for a, b in location_table.items() if b.minigame == "Custom"]:
+                region_object = self.multiworld.get_region("Custom Minigame", self.player)
+                region_object.locations.append(RefunctLocation(self.player, loc_name, loc_data.id, region_object))
         
     def set_og_randomizer_order(self):
         # OG Randomizer Minigame info
@@ -973,6 +989,12 @@ class RefunctWorld(World):
             region_a.connect(region_b, f"Enter Clique")
             location = self.get_location("Clique: The Button")
             location.access_rule = lambda state: state.has("Clique: Button Activation", self.player)
+            
+        if "Custom Minigame" in self.minigames:
+            region_a = self.multiworld.get_region("10010102", self.player)
+            region_b = self.multiworld.get_region("Custom Minigame", self.player)
+            region_a.connect(region_b, f"Enter Custom Minigame", 
+                lambda state: state.has("Custom Minigame", self.player))
 
     def create_item(self, name: str, force_useful = False) -> Item:
         item_data = item_table[name]

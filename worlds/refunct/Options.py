@@ -109,7 +109,7 @@ class NumberOfMinigames(Range):
     display_name = "Number of Minigames"
     default = 7
     range_start = -1
-    range_end = 14
+    range_end = 15
     
 class NerfMinigameChecks(Toggle):
     """
@@ -197,6 +197,12 @@ class MinigamesLikeliness(OptionCounter):
     Based on Archipelago game "Clique". Hard-mode!
     There is one free item in this minigame. Once the "button activation" item is found, 
     you can press the button for another check.
+    
+    Custom Minigame:
+    You can now play custom maps as part of archipelago! Every button you press is a check.
+    Download *any* custom map you want, you can find them pinned in the archipelago-refunct post/thread.
+    Put the custom map in the correct folder (open the mod, press CTRL+SHIFT+M, "Open Maps Folder").
+    And then when starting the minigame, choose the map you want to play!
     """
    
     display_name = "Likeliness of minigames"
@@ -216,6 +222,7 @@ class MinigamesLikeliness(OptionCounter):
         "Rando Mountain Minigame": int,
         "Funny Bridge Game Minigame": int,
         "Clique": int,
+        "Custom Minigame": int,
     })
     min = 0
     default = {
@@ -233,6 +240,7 @@ class MinigamesLikeliness(OptionCounter):
         "Rando Mountain Minigame": 5,
         "Funny Bridge Game Minigame": 1,
         "Clique": 1,
+        "Custom Minigame": 1,
     }
 
 
