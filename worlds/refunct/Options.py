@@ -203,6 +203,10 @@ class MinigamesLikeliness(OptionCounter):
     Download *any* custom map you want, you can find them pinned in the archipelago-refunct post/thread.
     Put the custom map in the correct folder (open the mod, press CTRL+SHIFT+M, "Open Maps Folder").
     And then when starting the minigame, choose the map you want to play!
+    
+    Defunct Minigame:
+    All the platforms are there already, pressing buttons sinks them.
+    Goal: sink the entire game D:
     """
    
     display_name = "Likeliness of minigames"
@@ -223,12 +227,13 @@ class MinigamesLikeliness(OptionCounter):
         "Funny Bridge Game Minigame": int,
         "Clique": int,
         "Custom Minigame": int,
+        "Defunct Minigame": int,
     })
     min = 0
     default = {
         "Vanilla Minigame": 2,
         "Seeker Minigame": 2,
-        "Button Galore Minigame": 2,
+        "Button Galore Minigame": 1,
         "OG Randomizer Minigame": 5,
         "Block Brawl Minigame": 5,
         "Climb Line Minigame": 1,
@@ -241,6 +246,7 @@ class MinigamesLikeliness(OptionCounter):
         "Funny Bridge Game Minigame": 1,
         "Clique": 1,
         "Custom Minigame": 1,
+        "Defunct Minigame": 4,
     }
 
 

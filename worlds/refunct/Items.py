@@ -60,6 +60,7 @@ item_table["Clique: Button Activation"] = ItemData(9999901, ItemClassification.p
 item_table["Clique: Feeling of Satisfaction"] = ItemData(9999902, ItemClassification.filler)
 
 item_table["Custom Minigame"] = ItemData(9999890, ItemClassification.progression)
+item_table["Defunct Minigame"] = ItemData(9999880, ItemClassification.progression)
 
 
 # for i in range(0, 101):
