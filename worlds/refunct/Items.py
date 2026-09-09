@@ -182,7 +182,7 @@ item_groups = {
         "Blue Cubes Bag",
     },
     "Clusters": {
-        f"Cluster {i}" for i in range(1, 31) 
+        f"Cluster {i}" for i in range(1, 32) 
     },
     "Minigames": {
         "Vanilla Minigame",
