@@ -82,22 +82,6 @@ class ExtraCubes(Choice):
     option_green_cubes_bag = 2
     option_never = 9
     default = 2
-    
-class UnderwaterCubes(Choice):
-    """
-    [NOT IMPLEMETED YET]
-    This option adds underwater cubes throughout the main game.
-    Always: underwater cubes are always collectable (they are blue).
-    Red Cubes Bag: you need to find the Red Cubes Bag item first to be able to collect underwater cubes.
-    Blue Cubes Bag: you need to find the Blue Cubes Bag item first to be able to collect underwater cubes.
-    Never: there are no underwater cubes at all in your game.
-    """
-    display_name = "Underwater Cubes"
-    # option_always = 0
-    # option_red_cubes_bag = 1
-    # option_blue_cubes_bag = 2
-    option_never = 9
-    default = 9
 
 class NumberOfMinigames(Range):
     """
@@ -334,7 +318,6 @@ class RefunctOptions(PerGameCommonOptions):
     
     cubes: Cubes
     extra_cubes: ExtraCubes
-    # underwater_cubes: UnderwaterCubes
     
     number_of_minigames: NumberOfMinigames
     nerf_minigame_checks: NerfMinigameChecks
@@ -362,7 +345,6 @@ refunct_option_groups = [
         [
             Cubes,
             ExtraCubes,
-            # UnderwaterCubes,
         ],
     ),
     OptionGroup(

@@ -117,15 +117,7 @@ class RefunctWorld(World):
         if self.options.extra_cubes == ExtraCubes.option_green_cubes_bag:
             cube_bags.append("Green Cubes Bag")
             total_locs_cubes += 10
-            
-        # if self.options.underwater_cubes == UnderwaterCubes.option_always:
-        #     total_locs_cubes += 18
-        # if self.options.underwater_cubes == UnderwaterCubes.option_red_cubes_bag:
-        #     cube_bags.append("Red Cubes Bag")
-        #     total_locs_cubes += 18
-        # if self.options.underwater_cubes == UnderwaterCubes.option_blue_cubes_bag:
-        #     cube_bags.append("Blue Cubes Bag")
-        #     total_locs_cubes += 18
+    
         
         cube_bags = sorted(list(set(cube_bags)))
         for c in cube_bags:
@@ -467,7 +459,6 @@ class RefunctWorld(World):
                 loc_data.type_of_check == "Platform" or \
                 (self.options.cubes != Cubes.option_never and loc_data.type_of_check == "Cube") or \
                 (self.options.extra_cubes != ExtraCubes.option_never and loc_data.type_of_check == "Extra Cube"):
-                # (self.options.underwater_cubes != UnderwaterCubes.option_never and loc_data.type_of_check == "Underwater Cube"):
                 region = None
                 for cluster_key, node_list in clusters.items():
                     if loc_data.id in node_list:
@@ -1052,7 +1043,6 @@ class RefunctWorld(World):
             
         slot_data["cubes"] = self.options.cubes.value
         slot_data["extra_cubes"] = self.options.extra_cubes.value
-        # slot_data["underwater_cubes"] = self.options.underwater_cubes.value
             
         slot_data["seeker_platforms"] = self.seeker_platforms
         slot_data["og_randomizer_order"] = self.og_randomizer_order

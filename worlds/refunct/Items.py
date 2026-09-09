@@ -28,7 +28,6 @@ item_table["Lifts"] = ItemData(9999995, ItemClassification.progression)
 
 item_table["Red Cubes Bag"] = ItemData(9999989, ItemClassification.progression)
 item_table["Green Cubes Bag"] = ItemData(9999988, ItemClassification.progression)
-item_table["Blue Cubes Bag"] = ItemData(9999987, ItemClassification.progression)
 
 item_table["Flower"] = ItemData(9999981, ItemClassification.filler)
 
@@ -179,7 +178,6 @@ item_groups = {
     "Cubes Bags": {
         "Red Cubes Bag",
         "Green Cubes Bag",
-        "Blue Cubes Bag",
     },
     "Clusters": {
         f"Cluster {i}" for i in range(1, 32) 
