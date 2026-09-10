@@ -93,7 +93,7 @@ class NumberOfMinigames(Range):
     display_name = "Number of Minigames"
     default = 7
     range_start = -1
-    range_end = 15
+    range_end = 17
     
 class NerfMinigameChecks(Toggle):
     """
@@ -191,6 +191,10 @@ class MinigamesLikeliness(OptionCounter):
     Defunct Minigame:
     All the platforms are there already, pressing buttons sinks them.
     Goal: sink the entire game D:
+    
+    Defunct Rando Minigame:
+    Defunct Minigame but randomized. Three buttons light up at a time.
+    Keep pressing them until the entire game is gone D:
     """
    
     display_name = "Likeliness of minigames"
@@ -212,6 +216,7 @@ class MinigamesLikeliness(OptionCounter):
         "Clique": int,
         "Custom Minigame": int,
         "Defunct Minigame": int,
+        "Defunct Rando Minigame": int,
     })
     min = 0
     default = {
@@ -230,8 +235,10 @@ class MinigamesLikeliness(OptionCounter):
         "Funny Bridge Game Minigame": 1,
         "Clique": 1,
         "Custom Minigame": 1,
-        "Defunct Minigame": 4,
+        "Defunct Minigame": 2,
+        "Defunct Rando Minigame": 4,
     }
+    
 
 
 class EffectsAndTraps(OptionCounter):
