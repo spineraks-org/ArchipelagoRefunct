@@ -195,6 +195,9 @@ class MinigamesLikeliness(OptionCounter):
     Defunct Rando Minigame:
     Defunct Minigame but randomized. Three buttons light up at a time.
     Keep pressing them until the entire game is gone D:
+    
+    Relocate Minigame:
+    You see a picture on screen, recreate it perfectly and press T for 2 checks. There are 3 photos.
     """
    
     display_name = "Likeliness of minigames"
